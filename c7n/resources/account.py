@@ -479,12 +479,12 @@ class RequestLimitIncrease(BaseAction):
                  - EBS
                limits:
                  - Provisioned IOPS (SSD) storage (GiB)
-               threshold: 60
+               threshold: 60.5
              actions:
                - type: request-limit-increase
                  notify: [email, email2]
                  percent-increase: 50
-                 message: "Please raise the below account limit(s); \n {limits}"
+                 message: "Please raise the below limit(s); \n {limits}"
     """
 
     schema = type_schema(
