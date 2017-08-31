@@ -484,7 +484,7 @@ class RequestLimitIncrease(BaseAction):
                - type: request-limit-increase
                  notify: [email, email2]
                  percent-increase: 50
-                 message: "Raise {service} - {limits} by {percent}%"
+                 message: "Please raise the below limit(s); \n {limits}"
     """
 
     schema = type_schema(
