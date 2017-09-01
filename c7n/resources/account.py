@@ -486,6 +486,7 @@ class RequestLimitIncrease(BaseAction):
                  percent-increase: 50
                  message: "Please raise the below limit(s); \n {limits}"
     """
+
     schema = type_schema(
         'request-limit-increase',
         **{'notify': {'type': 'array'},
