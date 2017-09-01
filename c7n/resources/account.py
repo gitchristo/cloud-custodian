@@ -464,27 +464,25 @@ class ServiceLimit(Filter):
 
 @actions.register('request-limit-increase')
 class RequestLimitIncrease(BaseAction):
-    """ File support ticket to raise limit
+    """File support ticket to raise limit.
 
-    :Example:
+        .. code-block: yaml
 
-    .. code-block: yaml
-
-        policies:
-          - name: account-service-limits
-            resource: account
-            filters:
-             - type: service-limit
-               services:
-                 - EBS
-               limits:
-                 - Provisioned IOPS (SSD) storage (GiB)
-               threshold: 60.5
-             actions:
-               - type: request-limit-increase
-                 notify: [email, email2]
-                 percent-increase: 50
-                 message: "Please raise the below limit(s) \n {limits}"
+            policies:
+              - name: account-service-limits
+                resource: account
+                filters:
+                  - type: service-limit
+                    services:
+                        - EBS
+                    limits:
+                        - Provisioned IOPS (SSD) storage (GiB)
+                    threshold: 60
+                actions:
+                  - type: request-limit-increase
+                    notify: [email, email2]
+                    percent-increase: 50
+                    message: "Raise {service} - {limits} by {percent}%"
     """
 
     schema = type_schema(
@@ -543,14 +541,15 @@ class RequestLimitIncrease(BaseAction):
                 'service': service,
                 'limits': '\n\t'.join(service_map[service]),
             })
-
-            client.create_case(
-                subject=subject,
-                communicationBody=body,
-                serviceCode=service_code,
-                categoryCode='general-guidance',
-                severityCode=self.data.get('severity', self.default_severity),
-                ccEmailAddresses=self.data.get('notify', []))
+            print("subject--- ",subject)
+            print(body)
+            # client.create_case(
+            #     subject=subject,
+            #     communicationBody=body,
+            #     serviceCode=service_code,
+            #     categoryCode='general-guidance',
+            #     severityCode=self.data.get('severity', self.default_severity),
+            #     ccEmailAddresses=self.data.get('notify', []))
 
 
 def cloudtrail_policy(original, bucket_name, account_id):
