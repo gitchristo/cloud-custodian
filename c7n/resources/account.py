@@ -464,7 +464,7 @@ class ServiceLimit(Filter):
 
 @actions.register('request-limit-increase')
 class RequestLimitIncrease(BaseAction):
-    """ File support ticket to raise limit
+    r"""File support ticket to raise limit.
 
     :Example:
 
@@ -483,7 +483,6 @@ class RequestLimitIncrease(BaseAction):
             actions:
               - type: request-limit-increase
                 notify: [email, email2]
-
                 ## You can use one of either percent-increase or a resource-count.
                 percent-increase: 50
                 message: "Please raise the below account limit(s); \n {limits}"
