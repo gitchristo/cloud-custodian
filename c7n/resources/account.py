@@ -489,18 +489,20 @@ class RequestLimitIncrease(BaseAction):
     """
 
     schema = {
+        'type': 'object',
         'notify': {'type': 'array'},
         'properties': {
+            'type': {'enum': ['request-limit-increase']},
             'percent-increase': {'type': 'number', 'minimum': 1},
-            'resource-count': {'type': 'number', 'minimum': 1}
+            'resource-count': {'type': 'number', 'minimum': 1},
+            'subject': {'type': 'string'},
+            'message': {'type': 'string'},
+            'severity': {'type': 'string', 'enum': ['urgent', 'high', 'normal', 'low']}
         },
         'oneOf': [
             {'required': ['type', 'percent-increase']},
             {'required': ['type', 'resource-count']}
-        ],
-        'subject': {'type': 'string'},
-        'message': {'type': 'string'},
-        'severity': {'type': 'string', 'enum': ['urgent', 'high', 'normal', 'low']},
+        ]
     }
 
     permissions = ('support:CreateCase',)
@@ -564,8 +566,6 @@ class RequestLimitIncrease(BaseAction):
                 'service': service,
                 'limits': '\n\t'.join(service_map[service]),
             })
-            print("subject--- ",subject)
-            print(body)
             client.create_case(
                 subject=subject,
                 communicationBody=body,
