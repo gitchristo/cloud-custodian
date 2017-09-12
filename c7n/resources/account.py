@@ -524,7 +524,6 @@ class RequestLimitIncrease(BaseAction):
         session = local_session(self.manager.session_factory)
         client = session.client('support', region_name='us-east-1')
         account_id = self.manager.config.account_id
-        print (self.data)
         service_map = {}
         region_map = {}
         limit_exceeded = resources[0].get('c7n:ServiceLimitsExceeded', [])
@@ -539,7 +538,8 @@ class RequestLimitIncrease(BaseAction):
                 else:
                     increase_by = current_limit * float(self.data.get('percent-increase')) / 100
                 increase_by = round(increase_by)
-                msg = '\nIncrease %s by %d in %s \n\t Current Limit: %s\n\t Current Usage: %s\n\t ' \
+                msg = '\nIncrease %s by %d in %s \n\t Current Limit: %s\n\t ' \
+                      'Current Usage: %s\n\t ' \
                       'Set New Limit to: %d' % (
                           s['check'], increase_by, s['region'], s['limit'], s['extant'],
                           (current_limit + increase_by))
@@ -550,7 +550,8 @@ class RequestLimitIncrease(BaseAction):
                 current_limit = int(s['limit'])
 
                 increase_by = resource_count
-                msg = '\nIncrease %s by %d in %s \n\t Current Limit: %s\n\t Current Usage: %s\n\t ' \
+                msg = '\nIncrease %s by %d in %s \n\t Current Limit: %s\n\t ' \
+                      'Current Usage: %s\n\t ' \
                       'Set New Limit to: %d' % (
                           s['check'], increase_by, s['region'], s['limit'], s['extant'],
                           (current_limit + increase_by))
