@@ -556,21 +556,6 @@ class RequestLimitIncrease(BaseAction):
                 service_map.setdefault(s['service'], []).append(msg)
                 region_map.setdefault(s['service'], s['region'])
 
-
-        # for s in limit_exceeded:
-        #     current_limit = int(s['limit'])
-        #     if current_limit <= 10:
-        #         increase_by = float(self.data.get('percent-increase') / 10)
-        #     else:
-        #         increase_by = current_limit * float(self.data.get('percent-increase')) / 100
-        #     increase_by = round(increase_by)
-        #     msg = '\nIncrease %s by %d in %s \n\t Current Limit: %s\n\t Current Usage: %s\n\t ' \
-        #           'Set New Limit to: %d' % (
-        #               s['check'], increase_by, s['region'], s['limit'], s['extant'],
-        #               (current_limit + increase_by))
-        #     service_map.setdefault(s['service'], []).append(msg)
-        #     region_map.setdefault(s['service'], s['region'])
-
         for service in service_map:
             subject = self.data.get('subject', self.default_subject).format(
                 service=service, region=region_map[service], account=account_id)
@@ -582,13 +567,13 @@ class RequestLimitIncrease(BaseAction):
             })
             print("subject--- ",subject)
             print(body)
-            # client.create_case(
-            #     subject=subject,
-            #     communicationBody=body,
-            #     serviceCode=service_code,
-            #     categoryCode='general-guidance',
-            #     severityCode=self.data.get('severity', self.default_severity),
-            #     ccEmailAddresses=self.data.get('notify', []))
+            client.create_case(
+                subject=subject,
+                communicationBody=body,
+                serviceCode=service_code,
+                categoryCode='general-guidance',
+                severityCode=self.data.get('severity', self.default_severity),
+                ccEmailAddresses=self.data.get('notify', []))
 
 
 def cloudtrail_policy(original, bucket_name, account_id):
