@@ -483,7 +483,7 @@ class RequestLimitIncrease(BaseAction):
             actions:
               - type: request-limit-increase
                 notify: [email, email2]
-                ## You can use one of either percent-increase or a resource-count.
+                ## You can use one of either percent-increase or an amount-increase.
                 percent-increase: 50
                 message: "Please raise the below account limit(s); \n {limits}"
     """
@@ -501,7 +501,7 @@ class RequestLimitIncrease(BaseAction):
         },
         'oneOf': [
             {'required': ['type', 'percent-increase']},
-            {'required': ['type', 'resource-count']}
+            {'required': ['type', 'amount-increase']}
         ]
     }
 
